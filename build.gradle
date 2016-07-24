@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    apply plugin: 'checkstyle'
+
+    task checkstyle(type: Checkstyle) {
+        configFile file("${project.rootDir}/config/checkstyle.xml")
+        source 'src'
+        include '**/*.java'
+        exclude '**/gen/**'
+
+        classpath = files()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 16
+    targetSdkVersion = 23
+    compileSdkVersion = 23
+    buildToolsVersion = '23.0.3'
+
+    // Guava
+    guavaVersion = '19.0'
+
+    // App dependencies
+    supportLibraryVersion = '24.0.0'
+    picassoVersion = '2.5.2'
+    butterknifeVersion = '7.0.1'
+    daggerVersion = '2.0.2'
+    annotationVersion = '10.0-b28'
+    twitterKitVersion = '1.14.1@aar'
+
+    junitVersion = '4.12'
+    daggerMockVersion = '0.4'
+    dexmakerVersion = '1.2'
+    runnerVersion = '0.5'
+    rulesVersion = '0.5'
+    mockitoVersion = '1.10.19'
+    espressoVersion = '2.2.2'
+}

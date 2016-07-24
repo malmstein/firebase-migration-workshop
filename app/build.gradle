@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.malmstein.workshops.firebase"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+
+        def STRING = "String"
+
+        def TWITTER_SECRET = "TWITTER_SECRET"
+        def TWITTER_KEY = "TWITTER_KEY"
+
+        debug {
+            buildConfigField STRING, TWITTER_KEY, "\"AZXOEEdgYzhNrIC2qEFg7Ar9C\""
+            buildConfigField STRING, TWITTER_SECRET, "\"olZmlwitZUWLur35EAlGt7kKVDeY4LDF3fUkprPdEXvmJZ7h7G\""
+        }
+
+        release {
+            minifyEnabled false
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    compile "com.google.dagger:dagger:$rootProject.daggerVersion"
+    compile "org.glassfish:javax.annotation:$rootProject.annotationVersion"
+
+    compile("com.twitter.sdk.android:twitter:$rootProject.twitterKitVersion") {
+        transitive = true
+    }
+
+    apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    testCompile "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    testCompile "junit:junit:$rootProject.junitVersion"
+
+    androidTestCompile "com.github.fabioCollini:DaggerMock:$rootProject.daggerMockVersion"
+    androidTestApt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    androidTestCompile "com.google.dexmaker:dexmaker:$rootProject.dexmakerVersion"
+    androidTestCompile("com.google.dexmaker:dexmaker-mockito:$rootProject.dexmakerVersion") {
+        exclude group: 'org.hamcrest', module: 'hamcrest-core'
+    }
+    androidTestCompile "com.android.support.test:runner:$rootProject.runnerVersion"
+    androidTestCompile "com.android.support.test:rules:$rootProject.rulesVersion"
+    androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion") {
+        exclude group: 'javax.inject', module: 'javax.inject'
+        exclude group: 'com.squareup', module: 'javawriter'
+    }
+
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion") {
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-v4'
+    }
+
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+
+    // Resolve conflicts between main and test APK:
+    androidTestCompile "com.android.support:design:$rootProject.supportLibraryVersion"
+
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+    }
+}
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+}
