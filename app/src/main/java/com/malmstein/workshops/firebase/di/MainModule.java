@@ -32,4 +32,5 @@ public class MainModule {
     public SuperHeroesRepository provideSuperHeroesRepository() {
         return new SuperHeroesRepository();
     }
+
 }
