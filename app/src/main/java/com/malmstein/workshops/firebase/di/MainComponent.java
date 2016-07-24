@@ -18,6 +18,7 @@ package com.malmstein.workshops.firebase.di;
 
 import com.malmstein.workshops.firebase.ui.view.SuperHeroDetailActivity;
 import com.malmstein.workshops.firebase.ui.view.SuperHeroesActivity;
+import com.malmstein.workshops.firebase.ui.view.SuperHeroesLoginActivity;
 
 import javax.inject.Singleton;
 
@@ -26,6 +27,8 @@ import dagger.Component;
 @Singleton
 @Component(modules = MainModule.class)
 public interface MainComponent {
+
+    void inject(SuperHeroesLoginActivity activity);
 
     void inject(SuperHeroesActivity activity);
 
