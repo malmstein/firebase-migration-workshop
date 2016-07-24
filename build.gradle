@@ -42,8 +42,8 @@ ext {
     compileSdkVersion = 23
     buildToolsVersion = '23.0.3'
 
-    // Guava
-    guavaVersion = '19.0'
+    // Firebase
+    firebaseVersion = '9.0.2'
 
     // App dependencies
     supportLibraryVersion = '24.0.0'
@@ -51,6 +51,7 @@ ext {
     butterknifeVersion = '7.0.1'
     daggerVersion = '2.0.2'
     annotationVersion = '10.0-b28'
+    guavaVersion = '19.0'
     twitterKitVersion = '1.14.1@aar'
     mixpanelVerion = '4.9.1'
 

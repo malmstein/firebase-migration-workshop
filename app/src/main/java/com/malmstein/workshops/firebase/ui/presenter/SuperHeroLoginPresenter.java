@@ -9,11 +9,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.TwitterAuthProvider;
+import com.malmstein.workshops.firebase.analytics.AnalyticsTracking;
 import com.twitter.sdk.android.core.TwitterSession;
 
 import javax.inject.Inject;
 
 public class SuperHeroLoginPresenter extends Presenter<SuperHeroLoginPresenter.View> {
+
+    @Inject
+    AnalyticsTracking analyticsTracking;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -44,8 +48,10 @@ public class SuperHeroLoginPresenter extends Presenter<SuperHeroLoginPresenter.V
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            analyticsTracking.trackEvent("login succesful");
                             getView().openSuperHeroesScreen();
                         } else {
+                            analyticsTracking.trackEvent("login failure");
                             getView().showWrongCredentials();
                         }
                     }

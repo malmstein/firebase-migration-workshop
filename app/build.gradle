@@ -24,21 +24,24 @@ android {
         abortOnError false
     }
 }
-
 dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
-
-    compile "com.mixpanel.android:mixpanel-android:$rootProject.mixpanelVerion"
 
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     compile "org.glassfish:javax.annotation:$rootProject.annotationVersion"
 
+    // Old Third Party Dependencies
+    compile "com.mixpanel.android:mixpanel-android:$rootProject.mixpanelVerion"
     compile("com.twitter.sdk.android:twitter:$rootProject.twitterKitVersion") {
         transitive = true
     }
+
+    // New Firebase Dependencies
+    compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
+    compile "com.google.firebase:firebase-auth:$rootProject.firebaseVersion"
 
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
@@ -75,6 +78,7 @@ dependencies {
         resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     }
 }
+
 
 configurations.all {
     resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"

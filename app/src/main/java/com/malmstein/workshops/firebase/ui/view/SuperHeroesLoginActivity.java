@@ -19,8 +19,6 @@ import butterknife.Bind;
 
 public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroLoginPresenter.View {
 
-    // Inject your Analytics tracker here
-
     @Inject
     SuperHeroLoginPresenter presenter;
 
@@ -66,7 +64,6 @@ public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroL
             @Override
             public void success(Result<TwitterSession> result) {
                 presenter.handleTwitterSession(result.data);
-                SuperHeroesActivity.open(SuperHeroesLoginActivity.this);
             }
 
             @Override
@@ -90,5 +87,6 @@ public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroL
     @Override
     public void openSuperHeroesScreen() {
         SuperHeroesActivity.open(this);
+        finish();
     }
 }
