@@ -16,6 +16,8 @@
 
 package com.malmstein.workshops.firebase.ui.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +44,11 @@ public class SuperHeroesActivity extends BaseActivity implements SuperHeroesPres
     RecyclerView recyclerView;
     private SuperHeroesAdapter adapter;
 
+    public static void open(Context context) {
+        Intent intent = new Intent(context, SuperHeroesActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +61,7 @@ public class SuperHeroesActivity extends BaseActivity implements SuperHeroesPres
 
     @Override
     public int getLayoutId() {
-        return R.layout.main_activity;
+        return R.layout.super_heroes_activity;
     }
 
     @Override
