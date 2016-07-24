@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 
 import com.malmstein.workshops.firebase.R;
+import com.malmstein.workshops.firebase.SuperHeroesApplication;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -14,6 +15,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import butterknife.Bind;
 
 public class SuperHeroesLoginActivity extends BaseActivity {
+
+    // Inject your Analytics tracking here
 
     @Bind(R.id.login_button)
     TwitterLoginButton loginButton;
@@ -26,6 +29,7 @@ public class SuperHeroesLoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDagger();
         setupLogin();
     }
 
@@ -33,14 +37,21 @@ public class SuperHeroesLoginActivity extends BaseActivity {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
+                // This is a good place to track a successful login
                 SuperHeroesActivity.open(SuperHeroesLoginActivity.this);
             }
 
             @Override
             public void failure(TwitterException exception) {
+                // This is a good place to track a failed login
                 Snackbar.make(loginButton, exception.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void initializeDagger() {
+        SuperHeroesApplication app = (SuperHeroesApplication) getApplication();
+        app.getMainComponent().inject(this);
     }
 
     @Override

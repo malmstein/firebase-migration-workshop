@@ -14,5 +14,5 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">Kata Super Heroes</string>
+    <string name="app_name">Firebase Super Heroes</string>
 </resources>

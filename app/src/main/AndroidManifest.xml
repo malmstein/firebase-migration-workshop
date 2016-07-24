@@ -19,6 +19,10 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- Mixpanel permissions-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -50,6 +54,10 @@
             android:name="io.fabric.ApiKey"
             android:value="AZXOEEdgYzhNrIC2qEFg7Ar9C"
             />
+
+        <meta-data
+            android:name="com.mixpanel.android.MPConfig.DisableViewCrawler"
+            android:value="true"/>
 
     </application>
 

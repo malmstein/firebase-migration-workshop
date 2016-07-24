@@ -19,15 +19,14 @@ package com.malmstein.workshops.firebase;
 import android.app.Application;
 import android.support.annotation.VisibleForTesting;
 
+import com.malmstein.workshops.firebase.di.ApplicationModule;
 import com.malmstein.workshops.firebase.di.DaggerMainComponent;
 import com.malmstein.workshops.firebase.di.MainComponent;
+import com.malmstein.workshops.firebase.di.MainModule;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
-
-import static com.malmstein.workshops.firebase.BuildConfig.TWITTER_KEY;
-import static com.malmstein.workshops.firebase.BuildConfig.TWITTER_SECRET;
 
 public class SuperHeroesApplication extends Application {
 
@@ -36,9 +35,12 @@ public class SuperHeroesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mainComponent = DaggerMainComponent.create();
 
-        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        mainComponent = DaggerMainComponent.builder()
+                .applicationModule(new ApplicationModule((getApplicationContext())))
+                .mainModule(new MainModule()).build();
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig("AZXOEEdgYzhNrIC2qEFg7Ar9C", "olZmlwitZUWLur35EAlGt7kKVDeY4LDF3fUkprPdEXvmJZ7h7G");
         Fabric.with(this, new Twitter(authConfig));
     }
 

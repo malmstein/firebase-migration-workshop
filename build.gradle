@@ -45,9 +45,6 @@ ext {
     // Guava
     guavaVersion = '19.0'
 
-    // Firebase
-    firebaseVersion = '9.0.2'
-
     // App dependencies
     supportLibraryVersion = '24.0.0'
     picassoVersion = '2.5.2'
@@ -55,6 +52,7 @@ ext {
     daggerVersion = '2.0.2'
     annotationVersion = '10.0-b28'
     twitterKitVersion = '1.14.1@aar'
+    mixpanelVerion = '4.9.1'
 
     junitVersion = '4.12'
     daggerMockVersion = '0.4'

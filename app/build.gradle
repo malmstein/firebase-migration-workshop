@@ -16,16 +16,6 @@ android {
 
     buildTypes {
 
-        def STRING = "String"
-
-        def TWITTER_SECRET = "TWITTER_SECRET"
-        def TWITTER_KEY = "TWITTER_KEY"
-
-        debug {
-            buildConfigField STRING, TWITTER_KEY, "\"AZXOEEdgYzhNrIC2qEFg7Ar9C\""
-            buildConfigField STRING, TWITTER_SECRET, "\"olZmlwitZUWLur35EAlGt7kKVDeY4LDF3fUkprPdEXvmJZ7h7G\""
-        }
-
         release {
             minifyEnabled false
         }
@@ -39,8 +29,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
 
-    compile "com.google.firebase:firebase-core:$rootProject.firebaseVersion"
-    compile "com.google.firebase:firebase-auth:$rootProject.firebaseVersion"
+    compile "com.mixpanel.android:mixpanel-android:$rootProject.mixpanelVerion"
 
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"

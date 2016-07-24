@@ -25,7 +25,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-@Component(modules = MainModule.class)
+@Component(modules = {MainModule.class, ApplicationModule.class})
 public interface MainComponent {
 
     void inject(SuperHeroesLoginActivity activity);

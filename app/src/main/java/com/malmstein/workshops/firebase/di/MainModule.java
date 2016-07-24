@@ -17,6 +17,9 @@
 package com.malmstein.workshops.firebase.di;
 
 
+import android.content.Context;
+
+import com.malmstein.workshops.firebase.analytics.MixpanelAnalytics;
 import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
 
 import javax.inject.Singleton;
@@ -32,4 +35,11 @@ public class MainModule {
     public SuperHeroesRepository provideSuperHeroesRepository() {
         return new SuperHeroesRepository();
     }
+
+    @Provides
+    @Singleton
+    public MixpanelAnalytics provideAnalytics(Context context) {
+        return new MixpanelAnalytics(context);
+    }
+
 }
