@@ -19,6 +19,8 @@ package com.malmstein.workshops.firebase;
 import android.app.Application;
 import android.support.annotation.VisibleForTesting;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.malmstein.workshops.firebase.di.ApplicationModule;
 import com.malmstein.workshops.firebase.di.DaggerMainComponent;
 import com.malmstein.workshops.firebase.di.MainComponent;
@@ -27,6 +29,7 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
+import io.fabric.sdk.android.Kit;
 
 public class SuperHeroesApplication extends Application {
 
@@ -40,8 +43,19 @@ public class SuperHeroesApplication extends Application {
                 .applicationModule(new ApplicationModule((getApplicationContext())))
                 .mainModule(new MainModule()).build();
 
-        TwitterAuthConfig authConfig = new TwitterAuthConfig("AZXOEEdgYzhNrIC2qEFg7Ar9C", "olZmlwitZUWLur35EAlGt7kKVDeY4LDF3fUkprPdEXvmJZ7h7G");
-        Fabric.with(this, new Twitter(authConfig));
+        setupFabric();
+    }
+
+    private void setupFabric() {
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().build())
+                .build();
+
+        TwitterAuthConfig authConfig = new TwitterAuthConfig("SNbfv0VMO6LMyChpTZtdC58uc", "LmGPJBRKKd9G2UmMdJBLlXFvgp1dMuN7Fw9o9CjlzctbTSEdaQ");
+        Twitter twitter = new Twitter(authConfig);
+        Kit[] kits = new Kit[]{crashlyticsKit, twitter};
+
+        Fabric.with(this, kits);
     }
 
     public MainComponent getMainComponent() {

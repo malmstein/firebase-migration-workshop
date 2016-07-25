@@ -21,6 +21,7 @@ import android.content.Context;
 
 import com.malmstein.workshops.firebase.analytics.AnalyticsTracking;
 import com.malmstein.workshops.firebase.analytics.FirebaseTracking;
+import com.malmstein.workshops.firebase.crash.CrashlyticsReporting;
 import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
 
 import javax.inject.Singleton;
@@ -41,6 +42,12 @@ public class MainModule {
     @Singleton
     public AnalyticsTracking provideAnalytics(Context context) {
         return new FirebaseTracking(context);
+    }
+
+    @Provides
+    @Singleton
+    public CrashlyticsReporting provideCrashReporting() {
+        return new CrashlyticsReporting();
     }
 
 }
