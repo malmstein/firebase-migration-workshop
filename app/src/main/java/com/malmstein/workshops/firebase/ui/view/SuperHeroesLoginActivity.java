@@ -6,17 +6,23 @@ import android.support.design.widget.Snackbar;
 
 import com.malmstein.workshops.firebase.R;
 import com.malmstein.workshops.firebase.SuperHeroesApplication;
+import com.malmstein.workshops.firebase.crash.CrashlyticsReporting;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 
 public class SuperHeroesLoginActivity extends BaseActivity {
 
     // Inject your Analytics tracking here
+
+    @Inject
+    CrashlyticsReporting crashlyticsReporting;
 
     @Bind(R.id.login_button)
     TwitterLoginButton loginButton;
@@ -45,6 +51,7 @@ public class SuperHeroesLoginActivity extends BaseActivity {
             public void failure(TwitterException exception) {
                 // This is a good place to track a failed login
                 Snackbar.make(loginButton, exception.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
+                crashlyticsReporting.crash();
             }
         });
     }

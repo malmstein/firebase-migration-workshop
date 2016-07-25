@@ -7,7 +7,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 
@@ -53,6 +52,7 @@ ext {
     annotationVersion = '10.0-b28'
     twitterKitVersion = '1.14.1@aar'
     mixpanelVerion = '4.9.1'
+    crashlyticsVersion = '2.6.1@aar'
 
     junitVersion = '4.12'
     daggerMockVersion = '0.4'

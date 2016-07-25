@@ -20,6 +20,7 @@ package com.malmstein.workshops.firebase.di;
 import android.content.Context;
 
 import com.malmstein.workshops.firebase.analytics.MixpanelAnalytics;
+import com.malmstein.workshops.firebase.crash.CrashlyticsReporting;
 import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
 
 import javax.inject.Singleton;
@@ -40,6 +41,12 @@ public class MainModule {
     @Singleton
     public MixpanelAnalytics provideAnalytics(Context context) {
         return new MixpanelAnalytics(context);
+    }
+
+    @Provides
+    @Singleton
+    public CrashlyticsReporting provideCrashReporting() {
+        return new CrashlyticsReporting();
     }
 
 }

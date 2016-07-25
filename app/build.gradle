@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
@@ -40,6 +55,10 @@ dependencies {
         transitive = true
     }
 
+    compile("com.crashlytics.sdk.android:crashlytics:$rootProject.crashlyticsVersion") {
+        transitive = true;
+    }
+
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
     testCompile "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
@@ -79,5 +98,3 @@ dependencies {
 configurations.all {
     resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
 }
-
-apply plugin: 'com.google.gms.google-services'
