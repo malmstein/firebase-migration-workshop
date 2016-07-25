@@ -2,13 +2,14 @@ package com.malmstein.workshops.firebase.crash;
 
 import javax.inject.Inject;
 
-public class CrashlyticsReporting {
+public class CrashlyticsReporting implements CrashTracker {
 
     @Inject
     public CrashlyticsReporting() {
     }
 
-    public void crash() {
-        throw new RuntimeException();
+    @Override
+    public void crash(String log) {
+        throw new RuntimeException(log);
     }
 }

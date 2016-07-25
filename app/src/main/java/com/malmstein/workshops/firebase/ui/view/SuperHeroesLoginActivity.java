@@ -6,7 +6,7 @@ import android.support.design.widget.Snackbar;
 
 import com.malmstein.workshops.firebase.R;
 import com.malmstein.workshops.firebase.SuperHeroesApplication;
-import com.malmstein.workshops.firebase.crash.CrashlyticsReporting;
+import com.malmstein.workshops.firebase.crash.CrashTracker;
 import com.malmstein.workshops.firebase.ui.presenter.SuperHeroLoginPresenter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -24,7 +24,7 @@ public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroL
     SuperHeroLoginPresenter presenter;
 
     @Inject
-    CrashlyticsReporting crashlyticsReporting;
+    CrashTracker crashTracker;
 
     @Bind(R.id.login_button)
     TwitterLoginButton loginButton;
@@ -74,7 +74,7 @@ public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroL
             public void failure(TwitterException exception) {
                 // This is a good place to track a failed login
                 Snackbar.make(loginButton, exception.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
-                crashlyticsReporting.crash();
+                crashTracker.crash(exception.getLocalizedMessage());
             }
         });
     }
