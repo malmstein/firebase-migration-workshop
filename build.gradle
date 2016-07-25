@@ -15,7 +15,8 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://maven.fabric.io/public" }
+        maven { url "https://urbanairship.bintray.com/android" }
     }
 
     apply plugin: 'checkstyle'
@@ -53,6 +54,7 @@ ext {
     twitterKitVersion = '1.14.1@aar'
     mixpanelVerion = '4.9.1'
     crashlyticsVersion = '2.6.1@aar'
+    urbanAirshipVersion = '7.1.5'
 
     junitVersion = '4.12'
     daggerMockVersion = '0.4'

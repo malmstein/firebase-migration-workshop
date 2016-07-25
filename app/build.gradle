@@ -43,21 +43,20 @@ android {
 dependencies {
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
-
-    compile "com.mixpanel.android:mixpanel-android:$rootProject.mixpanelVerion"
-
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     compile "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     compile "org.glassfish:javax.annotation:$rootProject.annotationVersion"
 
+    // Old libraries
+    compile "com.mixpanel.android:mixpanel-android:$rootProject.mixpanelVerion"
     compile("com.twitter.sdk.android:twitter:$rootProject.twitterKitVersion") {
         transitive = true
     }
-
     compile("com.crashlytics.sdk.android:crashlytics:$rootProject.crashlyticsVersion") {
         transitive = true;
     }
+    compile "com.urbanairship.android:urbanairship-sdk:$rootProject.urbanAirshipVersion"
 
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 

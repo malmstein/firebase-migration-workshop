@@ -27,6 +27,7 @@ import com.malmstein.workshops.firebase.di.MainComponent;
 import com.malmstein.workshops.firebase.di.MainModule;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.urbanairship.UAirship;
 
 import io.fabric.sdk.android.Fabric;
 import io.fabric.sdk.android.Kit;
@@ -44,6 +45,7 @@ public class SuperHeroesApplication extends Application {
                 .mainModule(new MainModule()).build();
 
         setupFabric();
+        setupPushNotifications();
     }
 
     private void setupFabric() {
@@ -56,6 +58,17 @@ public class SuperHeroesApplication extends Application {
         Kit[] kits = new Kit[]{crashlyticsKit, twitter};
 
         Fabric.with(this, kits);
+    }
+
+    private void setupPushNotifications() {
+        UAirship.takeOff(this, new UAirship.OnReadyCallback() {
+            @Override
+            public void onAirshipReady(UAirship airship) {
+
+                // Enable user notifications
+                airship.getPushManager().setUserNotificationsEnabled(true);
+            }
+        });
     }
 
     public MainComponent getMainComponent() {
