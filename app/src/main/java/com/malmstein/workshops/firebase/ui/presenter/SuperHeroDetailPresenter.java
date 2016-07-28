@@ -18,17 +18,20 @@ package com.malmstein.workshops.firebase.ui.presenter;
 
 import com.malmstein.workshops.firebase.model.SuperHero;
 import com.malmstein.workshops.firebase.usecase.GetSuperHeroByName;
+import com.malmstein.workshops.firebase.usecase.GetTextSize;
 
 import javax.inject.Inject;
 
 public class SuperHeroDetailPresenter extends Presenter<SuperHeroDetailPresenter.View> {
 
+    private final GetTextSize getTextSize;
     private final GetSuperHeroByName getSuperHeroByName;
 
     private String name;
 
     @Inject
-    public SuperHeroDetailPresenter(GetSuperHeroByName getSuperHeroByName) {
+    public SuperHeroDetailPresenter(GetTextSize getTextSize, GetSuperHeroByName getSuperHeroByName) {
+        this.getTextSize = getTextSize;
         this.getSuperHeroByName = getSuperHeroByName;
     }
 
@@ -49,8 +52,19 @@ public class SuperHeroDetailPresenter extends Presenter<SuperHeroDetailPresenter
         });
     }
 
+    public void fetchTextSize() {
+        getTextSize.getTextSize(new GetTextSize.Callback() {
+            @Override
+            public void onTextSizeLoaded(long textSize) {
+                getView().updateTextSize(textSize);
+            }
+        });
+    }
+
     public interface View extends Presenter.View {
 
         void showSuperHero(SuperHero superHero);
+
+        void updateTextSize(long textSize);
     }
 }

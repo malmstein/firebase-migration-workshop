@@ -19,6 +19,9 @@ package com.malmstein.workshops.firebase.ui.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +66,24 @@ public class SuperHeroDetailActivity extends BaseActivity implements SuperHeroDe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.fresh_config_menu:
+                presenter.fetchTextSize();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.super_hero_detail_activity;
     }
@@ -74,6 +95,11 @@ public class SuperHeroDetailActivity extends BaseActivity implements SuperHeroDe
         superHeroDescriptionTextView.setText(superHero.getDescription());
         int avengersBadgeVisibility = superHero.isAvenger() ? View.VISIBLE : View.GONE;
         avengersBadgeView.setVisibility(avengersBadgeVisibility);
+    }
+
+    @Override
+    public void updateTextSize(long textSize) {
+        superHeroDescriptionTextView.setTextSize(textSize);
     }
 
     @Override

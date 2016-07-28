@@ -16,6 +16,7 @@ public class RemoteConfigRepository {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     public RemoteConfigRepository(FirebaseRemoteConfig mFirebaseRemoteConfig) {
+        this.mFirebaseRemoteConfig = mFirebaseRemoteConfig;
 
         FirebaseRemoteConfigSettings firebaseRemoteConfigSettings =
                 new FirebaseRemoteConfigSettings.Builder()
@@ -63,6 +64,7 @@ public class RemoteConfigRepository {
 
     private void applyTextSize(Callback callback) {
         Long textSize = mFirebaseRemoteConfig.getLong("super_heroes_text_size");
+        callback.onTextSizeChanged(textSize);
         Log.d("RemoteConfigRepository", "TextSize is: " + textSize);
     }
 

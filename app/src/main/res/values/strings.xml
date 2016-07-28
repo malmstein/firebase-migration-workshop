@@ -15,4 +15,7 @@
   -->
 <resources>
     <string name="app_name">Firebase Super Heroes</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="fresh_config">Fresh Config</string>
+    <string name="invite_menu_label">Invite</string>
 </resources>
