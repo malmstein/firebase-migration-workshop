@@ -6,7 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public final class ApplicationModule {
+public class ApplicationModule {
 
     private final Context context;
 
@@ -15,7 +15,7 @@ public final class ApplicationModule {
     }
 
     @Provides
-    Context provideContext() {
+    public Context provideContext() {
         return context;
     }
 }

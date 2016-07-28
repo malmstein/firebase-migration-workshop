@@ -17,16 +17,22 @@
 package com.malmstein.workshops.firebase;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
-import com.karumi.katasuperheroes.di.MainComponent;
-import com.karumi.katasuperheroes.di.MainModule;
-import com.karumi.katasuperheroes.model.SuperHero;
-import com.karumi.katasuperheroes.model.SuperHeroesRepository;
-import com.karumi.katasuperheroes.ui.view.SuperHeroesActivity;
+import com.malmstein.workshops.firebase.di.ApplicationModule;
+import com.malmstein.workshops.firebase.di.MainComponent;
+import com.malmstein.workshops.firebase.di.MainModule;
+import com.malmstein.workshops.firebase.model.SuperHero;
+import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
+import com.malmstein.workshops.firebase.recyclerview.RecyclerViewInteraction;
+import com.malmstein.workshops.firebase.ui.view.SuperHeroDetailActivity;
+import com.malmstein.workshops.firebase.ui.view.SuperHeroesActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,18 +46,34 @@ import java.util.List;
 import it.cosenonjaviste.daggermock.DaggerMockRule;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.malmstein.workshops.firebase.matchers.RecyclerViewItemsCountMatcher.recyclerViewHasItemCount;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class SuperHeroesActivityTest {
 
+    private static final int ANY_NUMBER_OF_SUPER_HEROES = 10;
+
     @Rule
     public DaggerMockRule<MainComponent> daggerRule =
-            new DaggerMockRule<>(MainComponent.class, new MainModule()).set(
+            new DaggerMockRule<>(MainComponent.class,
+                    new MainModule(),
+                    new ApplicationModule(InstrumentationRegistry.getInstrumentation()
+                            .getTargetContext()
+                            .getApplicationContext())).set(
                     new DaggerMockRule.ComponentSetter<MainComponent>() {
                         @Override
                         public void setComponent(MainComponent component) {
@@ -202,7 +224,7 @@ public class SuperHeroesActivityTest {
         when(repository.getAll()).thenReturn(Collections.<SuperHero>emptyList());
     }
 
-    private MainActivity startActivity() {
+    private SuperHeroesActivity startActivity() {
         return activityRule.launchActivity(null);
     }
 }

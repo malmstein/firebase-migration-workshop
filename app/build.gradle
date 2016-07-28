@@ -66,6 +66,7 @@ dependencies {
     compile "com.google.firebase:firebase-auth:$rootProject.firebaseVersion"
     compile "com.google.firebase:firebase-crash:$rootProject.firebaseVersion"
     compile "com.google.firebase:firebase-messaging:$rootProject.firebaseVersion"
+    compile "com.google.firebase:firebase-config:$rootProject.firebaseVersion"
 
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 

@@ -19,10 +19,12 @@ package com.malmstein.workshops.firebase.di;
 
 import android.content.Context;
 
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.malmstein.workshops.firebase.analytics.AnalyticsTracking;
 import com.malmstein.workshops.firebase.analytics.FirebaseTracking;
 import com.malmstein.workshops.firebase.crash.CrashTracker;
 import com.malmstein.workshops.firebase.crash.FirebaseCrashTracker;
+import com.malmstein.workshops.firebase.model.RemoteConfigRepository;
 import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
 
 import javax.inject.Singleton;
@@ -51,4 +53,9 @@ public class MainModule {
         return new FirebaseCrashTracker();
     }
 
+    @Provides
+    @Singleton
+    public RemoteConfigRepository provideRemoteConfigRepository() {
+        return new RemoteConfigRepository(FirebaseRemoteConfig.getInstance());
+    }
 }

@@ -23,11 +23,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.karumi.katasuperheroes.di.MainComponent;
-import com.karumi.katasuperheroes.di.MainModule;
-import com.karumi.katasuperheroes.model.SuperHero;
-import com.karumi.katasuperheroes.model.SuperHeroesRepository;
-import com.karumi.katasuperheroes.ui.view.SuperHeroDetailActivity;
+import com.malmstein.workshops.firebase.di.ApplicationModule;
+import com.malmstein.workshops.firebase.di.MainComponent;
+import com.malmstein.workshops.firebase.di.MainModule;
+import com.malmstein.workshops.firebase.model.SuperHero;
+import com.malmstein.workshops.firebase.model.SuperHeroesRepository;
+import com.malmstein.workshops.firebase.ui.view.SuperHeroDetailActivity;
 
 import org.junit.After;
 import org.junit.Rule;
@@ -47,7 +48,9 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.karumi.katasuperheroes.matchers.ToolbarMatcher.onToolbarWithTitle;
+import static com.malmstein.workshops.firebase.matchers.ToolbarMatcher.onToolbarWithTitle;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
@@ -56,7 +59,11 @@ public class SuperHeroDetailActivityTests {
 
     @Rule
     public DaggerMockRule<MainComponent> daggerRule =
-            new DaggerMockRule<>(MainComponent.class, new MainModule()).set(
+            new DaggerMockRule<>(MainComponent.class,
+                    new MainModule(),
+                    new ApplicationModule(InstrumentationRegistry.getInstrumentation()
+                            .getTargetContext()
+                            .getApplicationContext())).set(
                     new DaggerMockRule.ComponentSetter<MainComponent>() {
                         @Override
                         public void setComponent(MainComponent component) {
@@ -67,7 +74,6 @@ public class SuperHeroDetailActivityTests {
                             app.setComponent(component);
                         }
                     });
-
     @Rule
     public ActivityTestRule<SuperHeroDetailActivity> activityRule =
             new ActivityTestRule<>(SuperHeroDetailActivity.class, true, false);
