@@ -6,7 +6,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
 import javax.inject.Inject;
 
-public class MixpanelAnalytics implements AnalyticsTracking {
+public class MixpanelAnalytics {
 
     private MixpanelAPI mixpanel;
 
@@ -15,8 +15,9 @@ public class MixpanelAnalytics implements AnalyticsTracking {
         mixpanel = MixpanelAPI.getInstance(context, "8aa510bfc327878b9f75400f8f6c2968");
     }
 
-    @Override
     public void trackEvent(String eventName) {
         mixpanel.track(eventName);
     }
+
+
 }

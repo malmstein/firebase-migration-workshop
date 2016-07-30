@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import com.malmstein.workshops.firebase.R;
 import com.malmstein.workshops.firebase.SuperHeroesApplication;
 import com.malmstein.workshops.firebase.crash.CrashlyticsReporting;
+import com.malmstein.workshops.firebase.ui.presenter.SuperHeroLoginPresenter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -17,12 +18,13 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 
-public class SuperHeroesLoginActivity extends BaseActivity {
-
-    // Inject your Analytics tracking here
+public class SuperHeroesLoginActivity extends BaseActivity implements SuperHeroLoginPresenter.View {
 
     @Inject
     CrashlyticsReporting crashlyticsReporting;
+
+    @Inject
+    SuperHeroLoginPresenter presenter;
 
     @Bind(R.id.login_button)
     TwitterLoginButton loginButton;
@@ -36,6 +38,7 @@ public class SuperHeroesLoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeDagger();
+        initializePresenter();
         setupLogin();
     }
 
@@ -44,12 +47,12 @@ public class SuperHeroesLoginActivity extends BaseActivity {
             @Override
             public void success(Result<TwitterSession> result) {
                 // This is a good place to track a successful login
-                SuperHeroesActivity.open(SuperHeroesLoginActivity.this);
+                presenter.notifyLogin(result);
             }
 
             @Override
             public void failure(TwitterException exception) {
-                // This is a good place to track a failed login
+                // This is a good place to track a failed login, maybe in the Presenter?
                 Snackbar.make(loginButton, exception.getLocalizedMessage(), Snackbar.LENGTH_LONG).show();
                 crashlyticsReporting.crash();
             }
@@ -61,10 +64,27 @@ public class SuperHeroesLoginActivity extends BaseActivity {
         app.getMainComponent().inject(this);
     }
 
+
+    private void initializePresenter() {
+        presenter.setView(this);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         loginButton.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void showWrongCredentials() {
+        // This is a good place to track a failed login
+        Snackbar.make(loginButton, "Wrong credentials", Snackbar.LENGTH_LONG).show();
+        crashlyticsReporting.crash();
+
+    }
+
+    @Override
+    public void openSuperHeroesScreen() {
+        SuperHeroesActivity.open(SuperHeroesLoginActivity.this);
+    }
 }
