@@ -25,9 +25,9 @@ import com.malmstein.workshops.firebase.di.ApplicationModule;
 import com.malmstein.workshops.firebase.di.DaggerMainComponent;
 import com.malmstein.workshops.firebase.di.MainComponent;
 import com.malmstein.workshops.firebase.di.MainModule;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.urbanairship.UAirship;
 
 import io.fabric.sdk.android.Fabric;
 import io.fabric.sdk.android.Kit;
@@ -61,14 +61,15 @@ public class SuperHeroesApplication extends Application {
     }
 
     private void setupPushNotifications() {
-        UAirship.takeOff(this, new UAirship.OnReadyCallback() {
-            @Override
-            public void onAirshipReady(UAirship airship) {
+        MixpanelAPI mixpanel = MixpanelAPI.getInstance(getApplicationContext(), "8aa510bfc327878b9f75400f8f6c2968");
 
-                // Enable user notifications
-                airship.getPushManager().setUserNotificationsEnabled(true);
-            }
-        });
+        // Always identify before initializing push notifications
+        mixpanel.getPeople().identify("13793");
+
+        // Sets up GCM registration and handling of GCM messages
+        // for Google API project number 717871474771
+        mixpanel.track("push_register");
+        mixpanel.getPeople().initPushHandling("421720080319");
     }
 
     public MainComponent getMainComponent() {
